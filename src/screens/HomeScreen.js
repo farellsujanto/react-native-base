@@ -6,14 +6,16 @@ import {
     Button
 } from 'react-native';
 
-function RegisterScreen({ componentId }) {
+
+function HomeScreen({ componentId }) {
 
     return (
         <View>
-            <Text>RegisterScreen</Text>
+            
+            <Text>HomeScreen</Text>
         </View>
     );
 }
 
 
-export default RegisterScreen;
+export default HomeScreen;

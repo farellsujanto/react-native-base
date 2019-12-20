@@ -1,27 +1,27 @@
 import React from 'react';
-import { Navigation } from "react-native-navigation";
 
 import {
     View,
     Text,
-    Button,
+    Button
 } from 'react-native';
 
-
-function moveScreen(componentId) {
-    Navigation.push(componentId, {
-        component: { name: 'RegisterScreen', }
-    });
-}
-
+import { Navigation } from'react-native-navigation';
 function LoginScreen({ componentId }) {
 
+
+    function navigateToRegister() {
+        Navigation.push(componentId, {
+            component: {
+                name: 'RegisterScreen'
+            }
+        });
+    }
+
     return (
-
         <View>
+        
             <Text>LoginScreen</Text>
-
-            <Button onPress={() => moveScreen(componentId)} title="REGISTER"></Button>
         </View>
     );
 }
