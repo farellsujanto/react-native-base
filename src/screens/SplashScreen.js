@@ -8,15 +8,12 @@ import {
     Text,
     StatusBar,
 } from 'react-native';
-
-import { firebaseApp } from '../utils/Firebase';
-
 import { loggedInRoute, nonLoggedInRoute } from '../Routes';
 
 function SplashScreen() {
 
     useEffect(() => {
-        nonLoggedInRoute();
+        loggedInRoute();
     }, []);
 
 

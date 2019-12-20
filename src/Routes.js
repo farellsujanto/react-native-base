@@ -1,3 +1,4 @@
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { Navigation } from "react-native-navigation";
 
 export const nonLoggedInRoute = () => {
@@ -6,15 +7,6 @@ export const nonLoggedInRoute = () => {
             stack: {
                 id: "authStack",
                 children: [
-                    {
-                        component: {
-                            id: "regId",
-                            name: "RegisterScreen",
-                            options: {
-                                topBar: { visible: false, }
-                            }
-                        },
-                    },
                     {
                         component: {
                             id: "loginId",
@@ -30,30 +22,56 @@ export const nonLoggedInRoute = () => {
     });
 }
 
-const iconColor = '#444';
-const selectedIconColor = '#0089da';
-
 export const loggedInRoute = () => {
-    Navigation.setRoot({
-        root: {
-            stack: {
-                id: "authStack",
-                children: [
-                    {
-                        component: {
-                            id: "homeId",
-                            name: "HomeScreen",
-                            options: {
-                                bottomTab: {
-                                    fontSize: 11,
-                                    text: 'Home',
+    Promise.all([
+        MaterialIcons.getImageSource('home', 25),
+        MaterialIcons.getImageSource('menu', 25),
+    ]).then(([homeIcon, menuIcon]) => {
+        Navigation.setRoot({
+            root: {
+                bottomTabs: {
+                    options: {
+                        bottomTabs: {
+                            titleDisplayMode: 'alwaysShow',
+                        },
+                    },
+                    children: [
+                        {
+                            stack: {
+                                children: [{
+                                    component: {
+                                        name: "HomeScreen",
+                                        options: {
+                                            topBar: { visible: false, }
+                                        }
+                                    },
+                                }],
+                                options: {
+                                    bottomTab: {
+                                        text: 'Home',
+                                        icon: homeIcon
+                                    }
+                                }
+                            },
+                        },
+                        {
+                            stack: {
+                                children: [{
+                                    component: {
+                                        name: "BlankScreen",
+                                    },
+                                }],
+                                options: {
+                                    bottomTab: {
+                                        text: 'ZZZ',
+                                        icon: menuIcon
+                                    }
                                 }
                             }
                         },
-                    },
-                    
-                ],
+                    ],
+                }
             }
-        }
+        });
     });
 }
