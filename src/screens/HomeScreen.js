@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { StyleSheet, Text, View, TouchableOpacity, Image, SafeAreaView } from 'react-native';
 import { scaleFont } from "../ScaleSize";
 import { Navigation } from 'react-native-navigation';
+import ImagePicker from 'react-native-image-picker';
 
 function TopActionContainer() {
     return (
@@ -66,6 +67,40 @@ export default function MainMenu({componentId}) {
     const [title, setTitle] = useState('Marketing')
     const [address, setAddress] = useState('Kuningan , Jakarta')
 
+    const [src, setSrc] = useState('');
+
+    function imagePick() {
+        const options = {
+            title: 'Select Avatar',
+            storageOptions: {
+                skipBackup: true,
+                path: 'images',
+            },
+        };
+
+        /**
+         * The first arg is the options object for customization (it can also be null or omitted for default options),
+         * The second arg is the callback which sends object: response (more info in the API Reference)
+         */
+        ImagePicker.showImagePicker(options, (response) => {
+            console.log('Response = ', response);
+
+            if (response.didCancel) {
+                console.log('User cancelled image picker');
+            } else if (response.error) {
+                console.log('ImagePicker Error: ', response.error);
+            } else if (response.customButton) {
+                console.log('User tapped custom button: ', response.customButton);
+            } else {
+                const source = { uri: response.uri };
+
+                // You can also display the image using data:
+                // const source = { uri: 'data:image/jpeg;base64,' + response.data };
+                // console.log(source)
+                setSrc(source)
+            }
+        });
+    }
 
     function navigateToSubmission() {
         Navigation.push(componentId, {
@@ -133,6 +168,7 @@ export default function MainMenu({componentId}) {
                     </View>
                 </TouchableOpacity>
                 <TouchableOpacity
+                    onPress={imagePick}
                     style={{ flexDirection: 'row', alignContent: 'center', paddingRight: scaleFont(15) }}>
                     <View style={styles.midButton}>
                         <Image
@@ -148,6 +184,8 @@ export default function MainMenu({componentId}) {
                         />
                     </View>
                 </TouchableOpacity>
+
+                {/* <Image source={{uri:src.uri}} style={{height:'100%', width: '100%', resizeMode: 'center'}} /> */}
 
             </View>
 
